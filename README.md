@@ -55,7 +55,7 @@ Siga os passos abaixo para configurar e personalizar seu próprio hub de links:
 Comece clonando o repositório para sua máquina local:
 
 ```bash
-git clone https://github.com/seusuario/links.git
+git clone https://github.com/felipegiust/links.git
 cd links
 ```
 
