@@ -1,0 +1,21 @@
+/* Por padrão, esconde todos os ícones de tema */
+.theme-icon-light,
+.theme-icon-dark,
+.theme-icon-auto {
+    display: none;
+}
+
+/* Mostra o ícone correspondente ao tema ATUAL da página */
+[data-bs-theme="light"] .theme-icon-light,
+[data-bs-theme="dark"] .theme-icon-dark {
+    display: block;
+}
+
+/* Caso especial para 'auto': mostra o ícone do sistema */
+[data-bs-theme="auto"] .theme-icon-auto {
+    display: block;
+}
+
+/* Se o tema for auto, o JS vai mudar para light/dark, então as regras acima já funcionam.
+   No entanto, precisamos garantir que o ícone 'auto' apareça quando 'auto' for a *escolha*,
+   não necessariamente o tema renderizado. A lógica do JS cuidará disso. */

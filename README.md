@@ -8,18 +8,22 @@ Este projeto apresenta uma solução pessoal e altamente **customizável** para 
 
 ## ✨ Funcionalidades Principais
 
+### PEDENTE
 - 🎨 **Design Personalizável**: Tenha controle total sobre as cores, fontes e o layout, adaptando-o à sua marca pessoal ou profissional.
 - 📱 **Totalmente Responsivo**: Garanta uma experiência de usuário impecável em qualquer dispositivo, seja desktop, tablet ou smartphone.
 - ⚡ **Performance Otimizada**: Desfrute de um carregamento rápido e eficiente, proporcionando uma navegação fluida para seus visitantes.
 - 🎯 **Fácil Manutenção**: Adicione, edite ou remova links de forma simples e intuitiva, mantendo seu hub sempre atualizado.
-- 🌙 **Tema Escuro/Claro**: Ofereça suporte às preferências de tema do usuário, com opções de modo escuro e claro.
 - 🔗 **Links Customizáveis**: Adicione seus próprios links e redes sociais, organizando-os da maneira que melhor lhe convier.
+
+### CONCLUIDAS
+- 🌙 **Tema Escuro/Claro**: Ofereça suporte às preferências de tema do usuário, com opções de modo escuro e claro.
+
 
 ## 🚀 Demonstração ao Vivo
 
 Explore o projeto em funcionamento:
 
-**Acesse:** [https://seusuario.github.io/links/](https://seusuario.github.io/links/)
+**Acesse:** [https://felipegiust.github.io/links/](https://felipegiust.github.io/links/)
 
 ## 🛠️ Tecnologias Utilizadas
 
@@ -29,6 +33,7 @@ Este projeto foi construído utilizando as seguintes tecnologias:
 - **CSS3**: Para estilização, responsividade e criação de uma interface visualmente atraente.
 - **JavaScript**: Para adicionar interatividade e dinamismo à experiência do usuário.
 - **GitHub Pages**: Utilizado para a hospedagem gratuita e eficiente do projeto.
+- **Bootstrap**: Framework CSS para facilitar o desenvolvimento de interfaces responsivas.
 
 ## 📦 Estrutura do Projeto
 
@@ -37,11 +42,10 @@ A organização dos arquivos e diretórios do projeto segue a seguinte estrutura
 ```
 links/
 ├── index.html         # Página principal do hub de links
-├── style.css          # Folha de estilos CSS para o design do site
-├── script.js          # Arquivo JavaScript para interatividade
 ├── assets/            # Contém recursos como imagens e ícones
-│   ├── images/        # Imagens utilizadas no projeto
-│   └── icons/         # Ícones para os links e redes sociais
+│   ├── img/             # Imagens utilizadas no projeto
+│   └── js/             # Arquivo JavaScript para interatividade    
+│   └── css/            # Arquivo CSS para estilização    
 ├── README.md          # Este arquivo de documentação
 └── LICENSE            # Informações sobre a licença do projeto
 ```
