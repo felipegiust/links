@@ -1,0 +1,105 @@
+/* TRADUÇÃO - ESTILOS PERSONALIZADOS */
+#Anutrickz_translateBTN {
+    position: relative;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    padding: 8px;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#Anutrickz_translateBTN:hover {
+    background-color: var(--bs-secondary-bg);
+}
+
+#Anutrickz_translateBTN svg {
+    width: 20px;
+    height: 20px;
+    display: block;
+    color: currentColor;
+}
+
+#ATLang_list {
+    width: 12rem;
+    right: 0px;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.15);
+    border-radius: 0.5rem;
+    position: absolute;
+    z-index: 1040;
+    background: var(--bs-body-bg);
+    top: 100%;
+    margin-top: 5px;
+    color: var(--bs-body-color);
+    border: 1px solid var(--bs-border-color);
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+#ATLang_list.hide {
+    display: none;
+    opacity: 0;
+}
+
+#ATLang_list.show {
+    display: block;
+    opacity: 1;
+}
+
+#ATLang_list li {
+    list-style: none;
+    line-height: 1.5rem;
+    font-size: .875rem;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 0.5rem 0.75rem;
+    transition: background-color 0.2s ease;
+    border-bottom: 1px solid var(--bs-border-color);
+}
+
+#ATLang_list li:hover {
+    background-color: var(--bs-secondary-bg);
+}
+
+#ATLang_list li:last-child {
+    border-bottom: none;
+}
+
+#ATLang_list ul {
+    margin: 0;
+    padding: 0;
+}
+
+.language-active {
+    color: var(--bs-primary);
+    background-color: var(--bs-primary-bg-subtle) !important;
+    font-weight: bold;
+}
+
+.language-list {
+    cursor: pointer;
+    align-items: center;
+    display: flex;
+}
+
+/* Esconde completamente o Google Translate */
+#goog-gt-tt,
+.goog-te-banner-frame,
+.goog-te-menu-frame,
+.VIpgJd-ZVi9od-ORHb-OEVmcd,
+.skiptranslate {
+    display: none !important;
+    visibility: hidden !important;
+    height: 0px !important;
+    width: 0px !important;
+    opacity: 0 !important;
+}
+
+
+
+#google_translate_element {
+    display: none !important;
+}

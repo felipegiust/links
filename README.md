@@ -17,6 +17,8 @@ Este projeto apresenta uma solução pessoal e altamente **customizável** para 
 
 ### CONCLUIDAS
 - 🌙 **Tema Escuro/Claro**: Ofereça suporte às preferências de tema do usuário, com opções de modo escuro e claro.
+- 🌐 **Tradução**: Inclua suporte para múltiplas línguas, permitindo que seus visitantes acessem seu hub de links em seu idioma nativo.
+
 
 
 ## 🚀 Demonstração ao Vivo
