@@ -28,6 +28,19 @@
     <!--  TEMA Bootstrap DARK/LIGHT -->
 
 
+
+    <!-- NOTIFICAÇÃO -->
+    <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+    <script>
+        window.OneSignalDeferred = window.OneSignalDeferred || [];
+        OneSignalDeferred.push(async function (OneSignal) {
+            await OneSignal.init({
+                appId: "ccfb89fc-591c-4e66-9cc0-080752de513b",
+            });
+        });
+    </script>
+
+
 </head>
 
 <body>
@@ -35,9 +48,10 @@
 
 
 
+    <!-- NAVEGAÇÃO -->
     <nav class="navbar bg-body-tertiary fixed-top" style="z-index: 1030;">
         <div class="container-fluid container">
-            <a class="navbar-brand" href="https://github.com/felipegiust/links">
+            <a class="navbar-brand notranslate" href="https://github.com/felipegiust/links">
                 <i class="bi bi-github"></i> Links
             </a>
 
@@ -113,7 +127,7 @@
                 </div>
 
 
-                <button type="button" class="btn btn-secondary">
+                <button type="button" class="btn btn-secondary" onclick="ativarNotificacoes()">
                     <i class="bi bi-bell-fill"></i>
                 </button>
 
@@ -151,10 +165,6 @@
             </div>
         </div>
     </nav>
-
-
-
-
     <!-- Navbar -->
 
 
@@ -166,6 +176,40 @@
             </div>
         </div>
     </div>
+
+
+
+
+    <!-- NOTIFICAÇÃO -->
+
+    <script>
+        function ativarNotificacoes() {
+            OneSignal.push(async function () {
+                try {
+                    // Mostra o prompt de permissão
+                    await OneSignal.showSlidedownPrompt();
+
+                    // Verifica se foi permitido
+                    const isSubscribed = await OneSignal.isPushNotificationsEnabled();
+
+                    if (isSubscribed) {
+                        alert("Notificações ativadas com sucesso! 🎉");
+
+                        // Pega o ID do usuário
+                        const userId = await OneSignal.getUserId();
+                        console.log("Usuário cadastrado:", userId);
+                    } else {
+                        alert("Para receber notificações, você precisa permitir o acesso.");
+                    }
+                } catch (error) {
+                    console.error("Erro:", error);
+                    alert("Erro ao ativar notificações. Tente novamente.");
+                }
+            });
+        }
+    </script>
+
+
 
 
 
@@ -184,6 +228,10 @@
     <!--  TEMA Bootstrap DARK/LIGHT -->
     <script src="assets/js/theme.js"></script>
     <!--  TEMA Bootstrap DARK/LIGHT -->
+
+
+
+
 
 
 </body>
