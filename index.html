@@ -35,52 +35,47 @@
     <script>
         window.OneSignalDeferred = window.OneSignalDeferred || [];
         OneSignalDeferred.push(async function (OneSignal) {
+            // ... (Seu código de inicialização)
             await OneSignal.init({
                 appId: "3e6933f1-caf3-493a-9c68-b62e3cce6798",
-                safari_web_id: "web.onesignal.auto.017f9378-7499-4b97-8d47-e55f2bb151c0",
-                notifyButton: {
-                    enable: false, // DESABILITA o botão flutuante padrão
-                },
-                allowLocalhostAsSecureOrigin: true,
-                autoRegister: false, // IMPORTANTE: não registra automaticamente
+                // ... outras configurações
+                notifyButton: { enable: false },
+                autoRegister: false,
             });
 
             // Salva a instância do OneSignal globalmente
             window.OneSignalInstance = OneSignal;
+            console.log("OneSignal inicializado e instância salva.");
         });
 
         /**
          * Função chamada ao clicar no seu botão.
-         * Ela inicia o processo de registro de notificação do OneSignal.
+         * Torne-a async para usar await na verificação de readiness.
          */
-        function ativarNotificacoes() {
-            // Verifica se a instância do OneSignal já foi inicializada
-            if (window.OneSignalInstance) {
-                const OneSignal = window.OneSignalInstance;
+        async function ativarNotificacoes() {
+            const OneSignal = window.OneSignalInstance;
 
-                // 1. Verificar se o usuário já está inscrito.
-                OneSignal.isPushNotificationsEnabled().then(function (isEnabled) {
-                    if (isEnabled) {
-                        // O usuário já está inscrito. Você pode mostrar uma mensagem ou fazer nada.
-                        console.log("O usuário já está inscrito para notificações.");
-                        alert("Você já está inscrito para notificações!");
-                    } else {
-                        // O usuário não está inscrito. Iniciamos o prompt de permissão.
-                        // O método `showSlidedownPrompt()` é o mais recomendado
-                        // para iniciar o processo de permissão de forma programática.
-                        OneSignal.showSlidedownPrompt().then(function (success) {
-                            console.log("Prompt de Slidedown exibido ou já em andamento:", success);
-                        }).catch(function (error) {
-                            console.error("Erro ao tentar exibir o prompt de Slidedown:", error);
-                        });
-                    }
-                }).catch(function (error) {
-                    console.error("Erro ao verificar o status da inscrição:", error);
-                });
-
-            } else {
-                console.error("OneSignal ainda não está pronto.");
+            if (!OneSignal) {
+                console.error("OneSignal ainda não está pronto. Tente novamente em breve.");
                 alert("Aguarde um momento, o sistema de notificação ainda está carregando.");
+                return;
+            }
+
+            try {
+                // Usa o método da instância que já está pronta
+                const isEnabled = await OneSignal.isPushNotificationsEnabled();
+
+                if (isEnabled) {
+                    console.log("O usuário já está inscrito para notificações.");
+                    alert("Você já está inscrito para notificações!");
+                } else {
+                    // Inicia o prompt de permissão
+                    await OneSignal.showSlidedownPrompt();
+                    console.log("Prompt de Slidedown exibido.");
+                }
+            } catch (error) {
+                console.error("Erro ao processar notificações:", error);
+                alert("Não foi possível ativar as notificações. Tente novamente.");
             }
         }
     </script>
@@ -226,7 +221,7 @@
 
 
     <!-- NOTIFICAÇÃO -->
-   
+
 
 
 
