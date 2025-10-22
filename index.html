@@ -39,15 +39,50 @@
                 appId: "3e6933f1-caf3-493a-9c68-b62e3cce6798",
                 safari_web_id: "web.onesignal.auto.017f9378-7499-4b97-8d47-e55f2bb151c0",
                 notifyButton: {
-                    enable: false,
+                    enable: false, // DESABILITA o botão flutuante padrão
                 },
                 allowLocalhostAsSecureOrigin: true,
-                autoRegister: false, // IMPORTANTE: não registrar automaticamente
+                autoRegister: false, // IMPORTANTE: não registra automaticamente
             });
 
             // Salva a instância do OneSignal globalmente
             window.OneSignalInstance = OneSignal;
         });
+
+        /**
+         * Função chamada ao clicar no seu botão.
+         * Ela inicia o processo de registro de notificação do OneSignal.
+         */
+        function ativarNotificacoes() {
+            // Verifica se a instância do OneSignal já foi inicializada
+            if (window.OneSignalInstance) {
+                const OneSignal = window.OneSignalInstance;
+
+                // 1. Verificar se o usuário já está inscrito.
+                OneSignal.isPushNotificationsEnabled().then(function (isEnabled) {
+                    if (isEnabled) {
+                        // O usuário já está inscrito. Você pode mostrar uma mensagem ou fazer nada.
+                        console.log("O usuário já está inscrito para notificações.");
+                        alert("Você já está inscrito para notificações!");
+                    } else {
+                        // O usuário não está inscrito. Iniciamos o prompt de permissão.
+                        // O método `showSlidedownPrompt()` é o mais recomendado
+                        // para iniciar o processo de permissão de forma programática.
+                        OneSignal.showSlidedownPrompt().then(function (success) {
+                            console.log("Prompt de Slidedown exibido ou já em andamento:", success);
+                        }).catch(function (error) {
+                            console.error("Erro ao tentar exibir o prompt de Slidedown:", error);
+                        });
+                    }
+                }).catch(function (error) {
+                    console.error("Erro ao verificar o status da inscrição:", error);
+                });
+
+            } else {
+                console.error("OneSignal ainda não está pronto.");
+                alert("Aguarde um momento, o sistema de notificação ainda está carregando.");
+            }
+        }
     </script>
 
 
@@ -191,101 +226,7 @@
 
 
     <!-- NOTIFICAÇÃO -->
-    <script>
-        async function ativarNotificacoes() {
-            try {
-                // Aguarda o OneSignal carregar se necessário
-                if (!window.OneSignalInstance) {
-                    await new Promise(resolve => {
-                        const checkInterval = setInterval(() => {
-                            if (window.OneSignalInstance) {
-                                clearInterval(checkInterval);
-                                resolve();
-                            }
-                        }, 100);
-                    });
-                }
-
-                const OneSignal = window.OneSignalInstance;
-
-                // Verifica o estado atual
-                const isSubscribed = await OneSignal.User.PushSubscription.optIn;
-                const permission = await OneSignal.Notifications.permission;
-
-                console.log("Estado atual:", { isSubscribed, permission });
-
-                // SE JÁ ESTÁ INSCRITO: oferece para desativar
-                if (isSubscribed) {
-                    const desativar = confirm("📢 Você já recebe notificações!\nDeseja desativar?");
-                    if (desativar) {
-                        await OneSignal.User.PushSubscription.optOut();
-                        alert("🔕 Notificações desativadas");
-                        atualizarIconeBotao(false);
-                    }
-                    return;
-                }
-
-                // SE PERMISSÃO FOI NEGADA: instruções para reativar
-                if (permission === 'denied') {
-                    alert("🔒 Você bloqueou as notificações.\n\nPara ativar:\n1. Clique no ícone de cadeado na barra de endereço\n2. Em 'Permissões', altere Notificações para 'Permitir'\n3. Recarregue a página e clique aqui novamente");
-                    return;
-                }
-
-                // SE PERMISSÃO JÁ FOI CONCEDIDA: apenas ativa
-                if (permission === 'granted') {
-                    await OneSignal.User.PushSubscription.optIn();
-                    alert("🎉 Notificações ativadas com sucesso!");
-                    atualizarIconeBotao(true);
-
-                    const userId = await OneSignal.User.PushSubscription.id;
-                    console.log("User ID:", userId);
-                    return;
-                }
-
-                // SE É A PRIMEIRA VEZ: solicita permissão
-                if (permission === 'default') {
-                    const userPermission = await OneSignal.Notifications.requestPermission();
-
-                    if (userPermission) {
-                        await OneSignal.User.PushSubscription.optIn();
-                        alert("🎉 Notificações ativadas com sucesso!");
-                        atualizarIconeBotao(true);
-
-                        const userId = await OneSignal.User.PushSubscription.id;
-                        console.log("User ID:", userId);
-                    } else {
-                        alert("❌ Permissão necessária para receber notificações.");
-                    }
-                }
-
-            } catch (error) {
-                console.error("Erro detalhado:", error);
-                alert("Erro ao processar. Tente novamente.");
-            }
-        }
-
-        // Função para atualizar o ícone do botão conforme o estado
-        function atualizarIconeBotao(ativado) {
-            const botao = document.querySelector('.btn.btn-secondary');
-            const icone = botao.querySelector('i');
-
-            if (ativado) {
-                icone.className = 'bi bi-bell-fill';
-                botao.title = 'Notificações ativadas - Clique para desativar';
-            } else {
-                icone.className = 'bi bi-bell';
-                botao.title = 'Clique para ativar notificações';
-            }
-        }
-
-        // Verifica o estado ao carregar a página e atualiza o ícone
-        document.addEventListener('DOMContentLoaded', async function () {
-            if (window.OneSignalInstance) {
-                const isSubscribed = await window.OneSignalInstance.User.PushSubscription.optIn;
-                atualizarIconeBotao(isSubscribed);
-            }
-        });
-    </script>
+   
 
 
 
