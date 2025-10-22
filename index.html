@@ -30,13 +30,23 @@
 
 
     <!-- NOTIFICAÇÃO -->
+    <!-- OneSignal SDK -->
     <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
     <script>
         window.OneSignalDeferred = window.OneSignalDeferred || [];
         OneSignalDeferred.push(async function (OneSignal) {
             await OneSignal.init({
                 appId: "ccfb89fc-591c-4e66-9cc0-080752de513b",
+                safari_web_id: "web.onesignal.auto.630456c0-6fee-4c63-83c2-4e6e2f9684cf",
+                notifyButton: {
+                    enable: true,
+                },
+                allowLocalhostAsSecureOrigin: true,
+                autoRegister: false, // IMPORTANTE: não registrar automaticamente
             });
+
+            // Salva a instância do OneSignal globalmente
+            window.OneSignalInstance = OneSignal;
         });
     </script>
 
@@ -181,31 +191,81 @@
 
 
     <!-- NOTIFICAÇÃO -->
-
     <script>
-        function ativarNotificacoes() {
-            OneSignal.push(async function () {
-                try {
-                    // Mostra o prompt de permissão
-                    await OneSignal.showSlidedownPrompt();
-
-                    // Verifica se foi permitido
-                    const isSubscribed = await OneSignal.isPushNotificationsEnabled();
-
-                    if (isSubscribed) {
-                        alert("Notificações ativadas com sucesso! 🎉");
-
-                        // Pega o ID do usuário
-                        const userId = await OneSignal.getUserId();
-                        console.log("Usuário cadastrado:", userId);
-                    } else {
-                        alert("Para receber notificações, você precisa permitir o acesso.");
-                    }
-                } catch (error) {
-                    console.error("Erro:", error);
-                    alert("Erro ao ativar notificações. Tente novamente.");
+        async function ativarNotificacoes() {
+            try {
+                // Aguarda a inicialização do OneSignal se necessário
+                if (!window.OneSignalInstance) {
+                    await new Promise(resolve => {
+                        const checkOneSignal = setInterval(() => {
+                            if (window.OneSignalInstance) {
+                                clearInterval(checkOneSignal);
+                                resolve();
+                            }
+                        }, 100);
+                    });
                 }
-            });
+
+                const OneSignal = window.OneSignalInstance;
+
+                // Verifica se já está inscrito
+                const isSubscribed = await OneSignal.User.PushSubscription.optIn;
+
+                if (isSubscribed) {
+                    alert("✅ Você já está inscrito para receber notificações!");
+                    return;
+                }
+
+                // Solicita permissão e registra
+                const permission = await OneSignal.Notifications.requestPermission();
+
+                if (permission) {
+                    // Se permitiu, registra a subscription
+                    await OneSignal.User.PushSubscription.optIn();
+
+                    // Aguarda um pouco e verifica o estado
+                    setTimeout(async () => {
+                        const subscribed = await OneSignal.User.PushSubscription.optIn;
+                        if (subscribed) {
+                            alert("🎉 Notificações ativadas com sucesso!");
+
+                            // Obtém o ID do usuário
+                            const externalId = await OneSignal.User.PushSubscription.id;
+                            console.log("OneSignal User ID:", externalId);
+
+                            // Aqui você pode enviar para seu backend
+                            cadastrarNoBackend(externalId);
+                        }
+                    }, 1000);
+                } else {
+                    alert("❌ Permissão necessária para receber notificações.");
+                }
+
+            } catch (error) {
+                console.error("Erro detalhado:", error);
+                alert("Erro ao ativar notificações. Tente novamente.");
+            }
+        }
+
+        function cadastrarNoBackend(userId) {
+            // Sua lógica para enviar para o backend
+            fetch('/api/cadastrar-usuario', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    onesignal_user_id: userId,
+                    timestamp: new Date().toISOString()
+                })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Usuário cadastrado no backend:', data);
+                })
+                .catch(error => {
+                    console.error('Erro ao cadastrar no backend:', error);
+                });
         }
     </script>
 
