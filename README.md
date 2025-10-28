@@ -14,7 +14,6 @@ Este projeto apresenta uma solução pessoal e altamente **customizável** para 
 - ⚡ **Performance Otimizada**: Desfrute de um carregamento rápido e eficiente, proporcionando uma navegação fluida para seus visitantes.
 - 🎯 **Fácil Manutenção**: Adicione, edite ou remova links de forma simples e intuitiva, mantendo seu hub sempre atualizado.
 - 🔗 **Links Customizáveis**: Adicione seus próprios links e redes sociais, organizando-os da maneira que melhor lhe convier.
-- 🔔 **Notificações Push**: Ofereça uma experiência personalizada com notificações push, alertando seus visitantes sobre atualizações importantes.
 
 
 
