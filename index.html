@@ -33,102 +33,30 @@
     <!-- OneSignal SDK -->
     <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
     <script>
-        // Variável para armazenar a instância do OneSignal após a inicialização
-        let OneSignalInstance = null;
-
-        // A função que será chamada pelo botão personalizado do usuário
-        async function ativarNotificacoes() {
-            if (!OneSignalInstance) {
-                console.error("OneSignal ainda não está pronto.");
-                return;
-            }
-
-            try {
-                // 1. Verificar o estado atual da permissão
-                // Usamos OneSignalInstance, que é a instância resolvida
-                const isEnabled = await OneSignalInstance.isPushNotificationsEnabled();
-
-                if (isEnabled) {
-                    console.log("O usuário já está inscrito. Exibindo gerenciamento de preferências.");
-                    // Se já estiver inscrito, mostramos o prompt para gerenciar as preferências
-                    await OneSignalInstance.showSlidedownPrompt({ force: true });
-                } else {
-                    console.log("Solicitando permissão de notificação...");
-                    // Se não estiver inscrito, solicitamos a inscrição
-                    await OneSignalInstance.showSlidedownPrompt();
-                }
-
-                // 2. Atualizar o estado visual do botão após a interação
-                await updateCustomButtonState();
-
-            } catch (error) {
-                console.error("Erro ao tentar ativar notificações:", error);
-            }
-        }
-
-        // Função para atualizar a aparência do botão (cor e ícone) com base no estado da inscrição
-        async function updateCustomButtonState() {
-            const button = document.querySelector('button[onclick="ativarNotificacoes()"]');
-            if (!button || !OneSignalInstance) return;
-
-            try {
-                // isPushNotificationsEnabled() verifica se o usuário concedeu permissão
-                const isEnabled = await OneSignalInstance.isPushNotificationsEnabled();
-                const icon = button.querySelector('i');
-
-                if (isEnabled) {
-                    // Usuário inscrito: Mudar para cor de sucesso e ícone preenchido
-                    button.classList.remove('btn-secondary');
-                    button.classList.add('btn-success');
-                    if (icon) {
-                        icon.className = 'bi bi-bell-fill';
-                    }
-                    button.title = "Notificações ativadas. Clique para gerenciar.";
-                } else {
-                    // Usuário não inscrito: Mudar para cor secundária (padrão) e ícone de sino "vazio"
-                    button.classList.remove('btn-success');
-                    button.classList.add('btn-secondary');
-                    if (icon) {
-                        icon.className = 'bi bi-bell';
-                    }
-                    button.title = "Clique para ativar as notificações.";
-                }
-            } catch (error) {
-                console.error("Erro ao atualizar o estado do botão:", error);
-            }
-        }
-
-        // Inicialização do OneSignal
         window.OneSignalDeferred = window.OneSignalDeferred || [];
         OneSignalDeferred.push(async function (OneSignal) {
-            // Armazena a instância resolvida na variável global
-            OneSignalInstance = OneSignal;
-
             await OneSignal.init({
                 appId: "3e6933f1-caf3-493a-9c68-b62e3cce6798",
                 safari_web_id: "web.onesignal.auto.017f9378-7499-4b97-8d47-e55f2bb151c0",
-
-                // PASSO CHAVE 1: Desabilita o botão de sino padrão
                 notifyButton: {
-                    enable: false,
-                },
-
-                // PASSO CHAVE 2: Desabilita o prompt automático
-                promptOptions: {
-                    autoPrompt: false,
+                    enable: false, // DESLIGA O SINO PADRÃO
                 },
             });
-
-            // Adicionar um listener para atualizar o botão quando o estado da inscrição mudar
-            // Usamos o objeto OneSignal resolvido para registrar o listener
-            OneSignal.on('subscriptionChange', function (isSubscribed) {
-                console.log("Estado da inscrição alterado para:", isSubscribed);
-                updateCustomButtonState();
-            });
-
-            // Atualizar o estado do botão na inicialização
-            updateCustomButtonState();
         });
+    </script>
+    <script>
+        async function ativarNotificacoes() {
+            // Solicita permissão para notificações
+            const permission = await OneSignal.Notifications.permission;
+
+            if (permission === 'default') {
+                // Pedir permissão
+                await OneSignal.Notifications.requestPermission();
+            } else if (permission === 'granted') {
+                // Já tem permissão - pode fazer algo opcional
+                console.log('Notificações já estão ativas');
+            }
+        }
     </script>
 
 
