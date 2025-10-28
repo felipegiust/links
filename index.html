@@ -35,49 +35,14 @@
     <script>
         window.OneSignalDeferred = window.OneSignalDeferred || [];
         OneSignalDeferred.push(async function (OneSignal) {
-            // ... (Seu código de inicialização)
             await OneSignal.init({
                 appId: "3e6933f1-caf3-493a-9c68-b62e3cce6798",
-                // ... outras configurações
-                notifyButton: { enable: false },
-                autoRegister: false,
+                safari_web_id: "web.onesignal.auto.017f9378-7499-4b97-8d47-e55f2bb151c0",
+                notifyButton: {
+                    enable: true,
+                },
             });
-
-            // Salva a instância do OneSignal globalmente
-            window.OneSignalInstance = OneSignal;
-            console.log("OneSignal inicializado e instância salva.");
         });
-
-        /**
-         * Função chamada ao clicar no seu botão.
-         * Torne-a async para usar await na verificação de readiness.
-         */
-        async function ativarNotificacoes() {
-            const OneSignal = window.OneSignalInstance;
-
-            if (!OneSignal) {
-                console.error("OneSignal ainda não está pronto. Tente novamente em breve.");
-                alert("Aguarde um momento, o sistema de notificação ainda está carregando.");
-                return;
-            }
-
-            try {
-                // Usa o método da instância que já está pronta
-                const isEnabled = await OneSignal.isPushNotificationsEnabled();
-
-                if (isEnabled) {
-                    console.log("O usuário já está inscrito para notificações.");
-                    alert("Você já está inscrito para notificações!");
-                } else {
-                    // Inicia o prompt de permissão
-                    await OneSignal.showSlidedownPrompt();
-                    console.log("Prompt de Slidedown exibido.");
-                }
-            } catch (error) {
-                console.error("Erro ao processar notificações:", error);
-                alert("Não foi possível ativar as notificações. Tente novamente.");
-            }
-        }
     </script>
 
 
@@ -220,7 +185,6 @@
 
 
 
-    <!-- NOTIFICAÇÃO -->
 
 
 
