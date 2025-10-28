@@ -38,11 +38,29 @@
             await OneSignal.init({
                 appId: "3e6933f1-caf3-493a-9c68-b62e3cce6798",
                 safari_web_id: "web.onesignal.auto.017f9378-7499-4b97-8d47-e55f2bb151c0",
+                // *** MUDANÇA AQUI: Defina 'enable' como false ***
                 notifyButton: {
-                    enable: true,
+                    enable: false,
                 },
             });
+            // Armazene a instância do OneSignal para uso posterior
+            window.OneSignalInstance = OneSignal;
         });
+
+
+        // Função para ser chamada pelo seu botão customizado
+        function ativarNotificacoes() {
+            // Verifica se a instância do OneSignal foi carregada
+            if (window.OneSignalInstance) {
+                // Exibe o prompt de permissão do OneSignal
+                window.OneSignalInstance.showSlidedownPrompt();
+
+                // Opcional: Você pode querer desabilitar o botão ou mudar seu 
+                // visual após o clique inicial para dar feedback ao usuário.
+            } else {
+                console.error("OneSignal ainda não foi inicializado.");
+            }
+        }
     </script>
 
 
