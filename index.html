@@ -33,96 +33,45 @@
     <!-- OneSignal SDK -->
     <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
     <script>
-        // Função que será chamada pelo seu botão personalizado (onclick="ativarNotificacoes( )")
-        async function ativarNotificacoes() {
-            const OneSignal = window.OneSignal;
-            if (!OneSignal) {
-                console.error("OneSignal não está carregado.");
-                return;
-            }
-
-            try {
-                // 1. Verificar o estado atual da permissão
-                const isEnabled = await OneSignal.isPushNotificationsEnabled();
-
-                if (isEnabled) {
-                    // Usuário já inscrito.
-                    console.log("O usuário já está inscrito.");
-                    // Opcional: Mostrar um prompt para gerenciar as preferências de notificação
-                    // await OneSignal.showSlidedownPrompt({ force: true });
-                } else {
-                    // Usuário não inscrito. Mostrar o prompt de inscrição (Slidedown Prompt).
-                    console.log("Solicitando permissão de notificação...");
-                    await OneSignal.showSlidedownPrompt();
-                }
-
-                // 2. Atualizar o estado visual do botão após a interação
-                await updateCustomButtonState();
-
-            } catch (error) {
-                console.error("Erro ao tentar ativar notificações:", error);
-            }
-        }
-
-        // Função para atualizar a aparência do botão (cor e ícone) com base no estado da inscrição
-        async function updateCustomButtonState() {
-            const button = document.querySelector('button[onclick="ativarNotificacoes()"]');
-            if (!button) return;
-
-            const OneSignal = window.OneSignal;
-            if (!OneSignal) return;
-
-            // isPushNotificationsEnabled() verifica se o usuário concedeu permissão
-            const isEnabled = await OneSignal.isPushNotificationsEnabled();
-            const icon = button.querySelector('i');
-
-            if (isEnabled) {
-                // Usuário inscrito: Mudar para cor de sucesso e ícone preenchido
-                button.classList.remove('btn-secondary');
-                button.classList.add('btn-success');
-                if (icon) {
-                    icon.className = 'bi bi-bell-fill';
-                }
-                button.title = "Notificações ativadas. Clique para gerenciar.";
-            } else {
-                // Usuário não inscrito: Mudar para cor secundária (padrão) e ícone de sino "vazio"
-                button.classList.remove('btn-success');
-                button.classList.add('btn-secondary');
-                if (icon) {
-                    // **Nota:** O ícone 'bi-bell' é o sino sem preenchimento do Bootstrap Icons
-                    icon.className = 'bi bi-bell';
-                }
-                button.title = "Clique para ativar as notificações.";
-            }
-        }
-
-        // Inicialização do OneSignal
         window.OneSignalDeferred = window.OneSignalDeferred || [];
         OneSignalDeferred.push(async function (OneSignal) {
             await OneSignal.init({
                 appId: "3e6933f1-caf3-493a-9c68-b62e3cce6798",
                 safari_web_id: "web.onesignal.auto.017f9378-7499-4b97-8d47-e55f2bb151c0",
-
-                // **PASSO CHAVE 1**: Desabilita o botão de sino padrão
                 notifyButton: {
-                    enable: false,
-                },
-
-                // **PASSO CHAVE 2**: Desabilita o prompt automático para que seja acionado apenas pelo botão personalizado
-                promptOptions: {
-                    autoPrompt: false,
+                    enable: false, // Desabilita o sino padrão
                 },
             });
 
-            // Opcional: Adicionar um listener para atualizar o botão quando o estado da inscrição mudar (ex: se o usuário desativar pelo navegador)
-            OneSignal.on('subscriptionChange', function (isSubscribed) {
-                console.log("Estado da inscrição alterado para:", isSubscribed);
-                updateCustomButtonState();
-            });
+            // Armazene a instância APENAS APÓS a inicialização
+            window.OneSignalInstance = OneSignal;
 
-            // Atualizar o estado do botão na inicialização para refletir o status atual do usuário
-            updateCustomButtonState();
+            // Opcional: Você pode querer habilitar o seu botão visualmente aqui
+            // para indicar que o serviço de notificação está carregado.
         });
+    </script>
+    <script>
+
+        async function ativarNotificacoes() {
+            // Verifica se o OneSignal já está carregado e pronto (window.OneSignalInstance)
+            if (window.OneSignalInstance) {
+
+                // Verifica se o usuário já se inscreveu
+                const isEnabled = await window.OneSignalInstance.isPushNotificationsEnabled();
+
+                if (isEnabled) {
+                    // Usuário já inscrito. Você pode mostrar uma mensagem ou mudar o ícone.
+                    console.log("O usuário já está inscrito.");
+                    alert("Você já está recebendo notificações! 🎉");
+                } else {
+                    // Usuário não inscrito. Exibe o prompt.
+                    window.OneSignalInstance.showSlidedownPrompt();
+                }
+            } else {
+                console.error("OneSignal ainda não está pronto. Tente novamente em um instante.");
+                alert("Aguarde o carregamento do serviço de notificação e tente novamente. ⏳");
+            }
+        }
     </script>
 
 
