@@ -31,47 +31,12 @@
 
     <!-- NOTIFICAÇÃO -->
     <!-- OneSignal SDK -->
-    <!-- <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
-    <script>
-        window.OneSignalDeferred = window.OneSignalDeferred || [];
-        OneSignalDeferred.push(async function (OneSignal) {
-            await OneSignal.init({
-                appId: "3e6933f1-caf3-493a-9c68-b62e3cce6798",
-                safari_web_id: "web.onesignal.auto.017f9378-7499-4b97-8d47-e55f2bb151c0",
-                notifyButton: {
-                    enable: false, // DESLIGA O SINO PADRÃO
-                },
-            });
-        });
-    </script>
-    <script>
-        async function ativarNotificacoes() {
-            console.log('Ativando notificações...');
-            // Solicita permissão para notificações
-            const permission = await OneSignal.Notifications.permission;
-
-            if (permission === 'default') {
-                // Pedir permissão
-                await OneSignal.Notifications.requestPermission();
-            } else if (permission === 'granted') {
-                // Já tem permissão - pode fazer algo opcional
-                console.log('Notificações já estão ativas');
-            }
-        }
-    </script> -->
-
     <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
     <script>
         window.OneSignalDeferred = window.OneSignalDeferred || [];
         OneSignalDeferred.push(async function (OneSignal) {
             await OneSignal.init({
                 appId: "3e6933f1-caf3-493a-9c68-b62e3cce6798",
-                safari_web_id: "web.onesignal.auto.017f9378-7499-4b97-8d47-e55f2bb151c0",
-                notifyButton: {
-                    enable: true,
-                },
-                serviceWorkerPath: '/onesignal/OneSignalSDKWorker.js',
-                serviceWorkerUpdaterPath: '/onesignal/OneSignalSDKUpdaterWorker.js',
             });
         });
     </script>
