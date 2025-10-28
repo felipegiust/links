@@ -33,38 +33,29 @@
     <!-- OneSignal SDK -->
     <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
     <script>
-        // Função para obter o objeto OneSignal global após a inicialização
-        async function getOneSignalInstance() {
-            // O OneSignal é carregado de forma assíncrona. 
-            // Esta função garante que o objeto 'OneSignal' esteja disponível no 'window'.
-            if (window.OneSignal) {
-                await window.OneSignal.isPushNotificationsEnabled(); // Chama um método para garantir que a Promise tenha resolvido
-                return window.OneSignal;
-            }
-            // Se a Promise ainda não resolveu, esperamos a inicialização
-            return new Promise(resolve => {
-                window.OneSignalDeferred = window.OneSignalDeferred || [];
-                window.OneSignalDeferred.push(function (OneSignal) {
-                    resolve(OneSignal);
-                });
-            });
-        }
+        // Variável para armazenar a instância do OneSignal após a inicialização
+        let OneSignalInstance = null;
 
         // A função que será chamada pelo botão personalizado do usuário
         async function ativarNotificacoes() {
-            try {
-                const OneSignal = await getOneSignalInstance();
+            if (!OneSignalInstance) {
+                console.error("OneSignal ainda não está pronto.");
+                return;
+            }
 
+            try {
                 // 1. Verificar o estado atual da permissão
-                const isEnabled = await OneSignal.isPushNotificationsEnabled();
+                // Usamos OneSignalInstance, que é a instância resolvida
+                const isEnabled = await OneSignalInstance.isPushNotificationsEnabled();
 
                 if (isEnabled) {
-                    console.log("O usuário já está inscrito.");
-                    // Opcional: Mostrar um prompt para gerenciar as preferências de notificação
-                    // await OneSignal.showSlidedownPrompt({ force: true });
+                    console.log("O usuário já está inscrito. Exibindo gerenciamento de preferências.");
+                    // Se já estiver inscrito, mostramos o prompt para gerenciar as preferências
+                    await OneSignalInstance.showSlidedownPrompt({ force: true });
                 } else {
                     console.log("Solicitando permissão de notificação...");
-                    await OneSignal.showSlidedownPrompt();
+                    // Se não estiver inscrito, solicitamos a inscrição
+                    await OneSignalInstance.showSlidedownPrompt();
                 }
 
                 // 2. Atualizar o estado visual do botão após a interação
@@ -78,13 +69,11 @@
         // Função para atualizar a aparência do botão (cor e ícone) com base no estado da inscrição
         async function updateCustomButtonState() {
             const button = document.querySelector('button[onclick="ativarNotificacoes()"]');
-            if (!button) return;
+            if (!button || !OneSignalInstance) return;
 
             try {
-                const OneSignal = await getOneSignalInstance();
-
                 // isPushNotificationsEnabled() verifica se o usuário concedeu permissão
-                const isEnabled = await OneSignal.isPushNotificationsEnabled();
+                const isEnabled = await OneSignalInstance.isPushNotificationsEnabled();
                 const icon = button.querySelector('i');
 
                 if (isEnabled) {
@@ -112,6 +101,9 @@
         // Inicialização do OneSignal
         window.OneSignalDeferred = window.OneSignalDeferred || [];
         OneSignalDeferred.push(async function (OneSignal) {
+            // Armazena a instância resolvida na variável global
+            OneSignalInstance = OneSignal;
+
             await OneSignal.init({
                 appId: "3e6933f1-caf3-493a-9c68-b62e3cce6798",
                 safari_web_id: "web.onesignal.auto.017f9378-7499-4b97-8d47-e55f2bb151c0",
@@ -128,7 +120,7 @@
             });
 
             // Adicionar um listener para atualizar o botão quando o estado da inscrição mudar
-            // Usamos o objeto OneSignal resolvido dentro da função deferred
+            // Usamos o objeto OneSignal resolvido para registrar o listener
             OneSignal.on('subscriptionChange', function (isSubscribed) {
                 console.log("Estado da inscrição alterado para:", isSubscribed);
                 updateCustomButtonState();
@@ -138,6 +130,7 @@
             updateCustomButtonState();
         });
     </script>
+
 
 
 
