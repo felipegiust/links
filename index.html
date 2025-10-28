@@ -46,6 +46,7 @@
     </script>
     <script>
         async function ativarNotificacoes() {
+            console.log('Ativando notificações...');
             // Solicita permissão para notificações
             const permission = await OneSignal.Notifications.permission;
 
