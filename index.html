@@ -33,46 +33,112 @@
     <!-- OneSignal SDK -->
     <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
     <script>
+        // Função para obter o objeto OneSignal global após a inicialização
+        async function getOneSignalInstance() {
+            // O OneSignal é carregado de forma assíncrona. 
+            // Esta função garante que o objeto 'OneSignal' esteja disponível no 'window'.
+            if (window.OneSignal) {
+                await window.OneSignal.isPushNotificationsEnabled(); // Chama um método para garantir que a Promise tenha resolvido
+                return window.OneSignal;
+            }
+            // Se a Promise ainda não resolveu, esperamos a inicialização
+            return new Promise(resolve => {
+                window.OneSignalDeferred = window.OneSignalDeferred || [];
+                window.OneSignalDeferred.push(function (OneSignal) {
+                    resolve(OneSignal);
+                });
+            });
+        }
+
+        // A função que será chamada pelo botão personalizado do usuário
+        async function ativarNotificacoes() {
+            try {
+                const OneSignal = await getOneSignalInstance();
+
+                // 1. Verificar o estado atual da permissão
+                const isEnabled = await OneSignal.isPushNotificationsEnabled();
+
+                if (isEnabled) {
+                    console.log("O usuário já está inscrito.");
+                    // Opcional: Mostrar um prompt para gerenciar as preferências de notificação
+                    // await OneSignal.showSlidedownPrompt({ force: true });
+                } else {
+                    console.log("Solicitando permissão de notificação...");
+                    await OneSignal.showSlidedownPrompt();
+                }
+
+                // 2. Atualizar o estado visual do botão após a interação
+                await updateCustomButtonState();
+
+            } catch (error) {
+                console.error("Erro ao tentar ativar notificações:", error);
+            }
+        }
+
+        // Função para atualizar a aparência do botão (cor e ícone) com base no estado da inscrição
+        async function updateCustomButtonState() {
+            const button = document.querySelector('button[onclick="ativarNotificacoes()"]');
+            if (!button) return;
+
+            try {
+                const OneSignal = await getOneSignalInstance();
+
+                // isPushNotificationsEnabled() verifica se o usuário concedeu permissão
+                const isEnabled = await OneSignal.isPushNotificationsEnabled();
+                const icon = button.querySelector('i');
+
+                if (isEnabled) {
+                    // Usuário inscrito: Mudar para cor de sucesso e ícone preenchido
+                    button.classList.remove('btn-secondary');
+                    button.classList.add('btn-success');
+                    if (icon) {
+                        icon.className = 'bi bi-bell-fill';
+                    }
+                    button.title = "Notificações ativadas. Clique para gerenciar.";
+                } else {
+                    // Usuário não inscrito: Mudar para cor secundária (padrão) e ícone de sino "vazio"
+                    button.classList.remove('btn-success');
+                    button.classList.add('btn-secondary');
+                    if (icon) {
+                        icon.className = 'bi bi-bell';
+                    }
+                    button.title = "Clique para ativar as notificações.";
+                }
+            } catch (error) {
+                console.error("Erro ao atualizar o estado do botão:", error);
+            }
+        }
+
+        // Inicialização do OneSignal
         window.OneSignalDeferred = window.OneSignalDeferred || [];
         OneSignalDeferred.push(async function (OneSignal) {
             await OneSignal.init({
                 appId: "3e6933f1-caf3-493a-9c68-b62e3cce6798",
                 safari_web_id: "web.onesignal.auto.017f9378-7499-4b97-8d47-e55f2bb151c0",
+
+                // PASSO CHAVE 1: Desabilita o botão de sino padrão
                 notifyButton: {
-                    enable: false, // Desabilita o sino padrão
+                    enable: false,
+                },
+
+                // PASSO CHAVE 2: Desabilita o prompt automático
+                promptOptions: {
+                    autoPrompt: false,
                 },
             });
 
-            // Armazene a instância APENAS APÓS a inicialização
-            window.OneSignalInstance = OneSignal;
+            // Adicionar um listener para atualizar o botão quando o estado da inscrição mudar
+            // Usamos o objeto OneSignal resolvido dentro da função deferred
+            OneSignal.on('subscriptionChange', function (isSubscribed) {
+                console.log("Estado da inscrição alterado para:", isSubscribed);
+                updateCustomButtonState();
+            });
 
-            // Opcional: Você pode querer habilitar o seu botão visualmente aqui
-            // para indicar que o serviço de notificação está carregado.
+            // Atualizar o estado do botão na inicialização
+            updateCustomButtonState();
         });
     </script>
-    <script>
 
-        async function ativarNotificacoes() {
-            // Verifica se o OneSignal já está carregado e pronto (window.OneSignalInstance)
-            if (window.OneSignalInstance) {
-
-                // Verifica se o usuário já se inscreveu
-                const isEnabled = await window.OneSignalInstance.isPushNotificationsEnabled();
-
-                if (isEnabled) {
-                    // Usuário já inscrito. Você pode mostrar uma mensagem ou mudar o ícone.
-                    console.log("O usuário já está inscrito.");
-                    alert("Você já está recebendo notificações! 🎉");
-                } else {
-                    // Usuário não inscrito. Exibe o prompt.
-                    window.OneSignalInstance.showSlidedownPrompt();
-                }
-            } else {
-                console.error("OneSignal ainda não está pronto. Tente novamente em um instante.");
-                alert("Aguarde o carregamento do serviço de notificação e tente novamente. ⏳");
-            }
-        }
-    </script>
 
 
 
