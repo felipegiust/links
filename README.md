@@ -9,7 +9,6 @@ Este projeto apresenta uma solução pessoal e altamente **customizável** para 
 ## ✨ Funcionalidades Principais
 
 ### PEDENTE
-- 🎨 **Design Personalizável**: Tenha controle total sobre as cores, fontes e o layout, adaptando-o à sua marca pessoal ou profissional.
 - 📱 **Totalmente Responsivo**: Garanta uma experiência de usuário impecável em qualquer dispositivo, seja desktop, tablet ou smartphone.
 - ⚡ **Performance Otimizada**: Desfrute de um carregamento rápido e eficiente, proporcionando uma navegação fluida para seus visitantes.
 - 🎯 **Fácil Manutenção**: Adicione, edite ou remova links de forma simples e intuitiva, mantendo seu hub sempre atualizado.
@@ -20,6 +19,8 @@ Este projeto apresenta uma solução pessoal e altamente **customizável** para 
 ### CONCLUIDAS
 - 🌙 **Tema Escuro/Claro**: Ofereça suporte às preferências de tema do usuário, com opções de modo escuro e claro.
 - 🌐 **Tradução**: Inclua suporte para múltiplas línguas, permitindo que seus visitantes acessem seu hub de links em seu idioma nativo.
+- 🎨 **Design Personalizável**: Tenha controle total sobre as cores, fontes e o layout, adaptando-o à sua marca pessoal ou profissional.
+
 
 
 
@@ -84,13 +85,20 @@ Edite o arquivo `index.html` para adicionar, modificar ou remover seus links. Ca
 
 ### 3. Customize o Estilo
 
-Modifique o arquivo `style.css` para ajustar as cores, fontes e o layout do seu hub de links. As variáveis CSS facilitam a personalização:
+Modifique o arquivo `tema.css` para ajustar as cores, fontes e o layout do seu hub de links. As variáveis CSS facilitam a personalização:
 
 ```css
 :root {
-    --primary-color: #2563eb; /* Cor principal */
-    --bg-color: #ffffff;    /* Cor de fundo */
-    --text-color: #1f2937;    /* Cor do texto */
+    /* Cores principais */
+    --bs-primary: #198754;
+    --bs-primary-rgb: 25, 135, 84;
+    --bs-primary-bg-subtle: #d1e7dd;
+    --bs-primary-border-subtle: #a3cfbb;
+    --bs-primary-text-emphasis: #0a3622;
+
+    /* Cores derivadas */
+    --bs-primary-dark: color-mix(in srgb, var(--bs-primary) 80%, black);
+    --bs-primary-light: color-mix(in srgb, var(--bs-primary) 20%, white);
 }
 ```
 
