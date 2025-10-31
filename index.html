@@ -4,7 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Links</title>
+    <title class="notranslate">Links</title>
+
+    <!-- TEMA previnir FOUC -->
+    <script src="assets/js/theme-loader.js"></script>
 
     <!-- Bootstrap CSS -->
     <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -14,6 +17,7 @@
 
     <!-- TEMA -->
     <link href="assets/css/tema.css" rel="stylesheet">
+
 
     <!-- Seu CSS -->
     <link href="assets/css/style.css" rel="stylesheet">
@@ -31,6 +35,13 @@
     <!--  TEMA Bootstrap DARK/LIGHT -->
 
 
+
+    <!-- Fonte Google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+        rel="stylesheet">
 
 
 
@@ -143,7 +154,7 @@
 
                         <ul class="navbar-nav justify-content-end flex-grow-1 pe-3 mb-3">
                             <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="#">Home</a>
+                                <a class="nav-link active" aria-current="page" href="#">Página Inicial</a>
                             </li>
                         </ul>
 
@@ -163,7 +174,7 @@
                                         </div>
                                         <div class="col-3">
                                             <button class="btn theme-btn theme-blue w-100" data-theme="blue">
-                                                <span class="d-block p-2 bg-primary"></span>
+                                                <span class="d-block p-2 bg-blue"></span>
                                             </button>
                                         </div>
                                         <div class="col-3">
@@ -199,14 +210,69 @@
 
 
     <!-- Conteúdo Principal -->
-    <div class="container mt-4">
-        <div class="row">
-            <div class="col-12">
+    <section class="bg-primary bg-gradient text-white">
+        <div class="container py-5">
+            <div class="row align-items-center py-5">
+                <div class="col-lg-6 text-center">
+                    <div class="bg-white bg-opacity-10 rounded-4 p-4 p-md-5">
+                        <img src="https://static.vecteezy.com/system/resources/previews/035/878/008/non_2x/ai-generated-military-personnel-isolated-on-transparent-background-free-png.png"
+                            alt="" class="img-fluid rounded-4 mb-4 w-75 ">
+                    </div>
+                </div>
+                <div class="col-lg-6 mb-4 mb-lg-0">
+                    <!-- Animação de digitar e mudar para (Felipe Machado Giusti, Full Stack, Freelancer etc.. ) -->
+                    <h1 class="display-4 fw-bold mb-4">>_ Felipe Machado Giusti</h1>
 
-
+                    <!-- Botões do Hero -->
+                    <div class="">
+                        <div class="d-grid gap-3">
+                            <a href="#"
+                                class="btn btn-outline-light btn-lg px-4 py-3 fw-semibold d-flex align-items-center justify-content-center">
+                                <i class="bi bi-file-earmark-person me-3"></i> Portfólio
+                            </a>
+                            <a href="#"
+                                class="btn btn-outline-light btn-lg px-4 py-3 fw-semibold d-flex align-items-center justify-content-center">
+                                <i class="bi bi-instagram me-3"></i> @machadogiusti
+                            </a>
+                            <a href="#"
+                                class="btn btn-outline-light btn-lg px-4 py-3 fw-semibold d-flex align-items-center justify-content-center">
+                                <i class="bi bi-linkedin me-3"></i> Felipe Machado Giusti
+                            </a>
+                            <a href="#"
+                                class="btn btn-outline-light btn-lg px-4 py-3 fw-semibold d-flex align-items-center justify-content-center">
+                                <i class="bi bi-github me-3"></i> GitHub
+                            </a>
+                            <a href="#"
+                                class="btn btn-outline-light btn-lg px-4 py-3 fw-semibold d-flex align-items-center justify-content-center">
+                                <i class="bi bi-envelope me-3"></i> Contato
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
+    </section>
+
+
+
+
+
+
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <p class="mb-0">Desenvolvido por Felipe Machado Giusti</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p class="mb-0">Todos os direitos reservados &copy; 2023</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
 
 
 
@@ -226,7 +292,7 @@
     <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 
-    <!-- Tema -->
+    <!-- Tema   -->
     <script src="assets/js/tema.js"></script>
 
     <!-- Seu JS personalizado -->

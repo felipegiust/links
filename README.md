@@ -16,10 +16,12 @@ Este projeto apresenta uma solução pessoal e altamente **customizável** para 
 
 
 
+
 ### CONCLUIDAS
 - 🌙 **Tema Escuro/Claro**: Ofereça suporte às preferências de tema do usuário, com opções de modo escuro e claro.
 - 🌐 **Tradução**: Inclua suporte para múltiplas línguas, permitindo que seus visitantes acessem seu hub de links em seu idioma nativo.
 - 🎨 **Design Personalizável**: Tenha controle total sobre as cores, fontes e o layout, adaptando-o à sua marca pessoal ou profissional.
+
 
 
 
@@ -86,6 +88,14 @@ Edite o arquivo `index.html` para adicionar, modificar ou remover seus links. Ca
 ### 3. Customize o Estilo
 
 Modifique o arquivo `tema.css` para ajustar as cores, fontes e o layout do seu hub de links. As variáveis CSS facilitam a personalização:
+```html
+<head>
+    <!-- Fonte Google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+</head>
+```
 
 ```css
 :root {
@@ -99,6 +109,11 @@ Modifique o arquivo `tema.css` para ajustar as cores, fontes e o layout do seu h
     /* Cores derivadas */
     --bs-primary-dark: color-mix(in srgb, var(--bs-primary) 80%, black);
     --bs-primary-light: color-mix(in srgb, var(--bs-primary) 20%, white);
+}
+
+/* FONTES  */
+body {
+    font-family: "Inter", sans-serif;
 }
 ```
 
