@@ -3,7 +3,9 @@
 window.onload = function () {
     var loader = document.getElementById('fullScreenLoader');
     if (loader) {
-        loader.classList.add('d-none');
+        setTimeout(function() {
+            loader.classList.add('d-none');
+        }, 1000); 
     }
 };
 
@@ -89,7 +91,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Inicia a animação após 500ms
     setTimeout(() => {
         typeAnimation(typingElement, nameToType, 100);
-    }, 1000);
+    }, 2000);
 });
 
 // ANIMAÇÃO DE DIGITAÇÃO Funções
@@ -133,6 +135,6 @@ document.addEventListener("DOMContentLoaded", function () {
     setTimeout(() => {
         // Inicia o processo de digitação quando a página carrega
         setTimeout(type, newTextDelay);
-    }, 2000);
+    }, 3000);
 });
 
