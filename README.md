@@ -1,27 +1,29 @@
-# 🔗 Links - Meu Hub Pessoal
+# 🔗 Links - Meu Hub Pessoal (Cartão de Visitas)
 
-[![GitHub Pages](https://img.shields.io/badge/deploy-GitHub%20Pages-blue?style=for-the-badge)](https://seusuario.github.io/links/)
+[![GitHub Pages](https://img.shields.io/badge/deploy-GitHub%20Pages-blue?style=for-the-badge)](https://felipegiust.github.io/links/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
-[![Status](https://img.shields.io/badge/status-active-success?style=for-the-badge)](https://github.com/seusuario/links)
+[![Status](https://img.shields.io/badge/status-active-success?style=for-the-badge)](https://github.com/felipegiust/links)
 
-Este projeto apresenta uma solução pessoal e altamente **customizável** para centralizar seus links mais importantes, funcionando como uma alternativa ao Linktree. Desenvolvido com foco em **controle total sobre design e funcionalidades**, permite que você crie um hub de links que reflita sua identidade digital de forma única e eficiente.
+Este projeto apresenta uma solução pessoal e altamente **customizável** para centralizar seus links mais importantes, funcionando como uma alternativa ao Linktree ou um cartão de visitas virtual. Desenvolvido com foco em **controle total sobre design e funcionalidades**, permite que você crie um hub de links que reflita sua identidade digital de forma única e eficiente.
 
 ## ✨ Funcionalidades Principais
 
 ### PEDENTE
-- 📱 **Totalmente Responsivo**: Garanta uma experiência de usuário impecável em qualquer dispositivo, seja desktop, tablet ou smartphone.
 - ⚡ **Performance Otimizada**: Desfrute de um carregamento rápido e eficiente, proporcionando uma navegação fluida para seus visitantes.
-- 🎯 **Fácil Manutenção**: Adicione, edite ou remova links de forma simples e intuitiva, mantendo seu hub sempre atualizado.
-- 🔗 **Links Customizáveis**: Adicione seus próprios links e redes sociais, organizando-os da maneira que melhor lhe convier.
+    - https://pagespeed.web.dev/analysis/
+    - https://gtmetrix.com/reports/
+    - https://www.catchpoint.com/webpagetest/results?publicurl= 
 
 
 
 
 ### CONCLUIDAS
+- 🔗 **Links Customizáveis**: Adicione seus próprios links e redes sociais, organizando-os da maneira que melhor lhe convier.
+- 🎯 **Fácil Manutenção**: Adicione, edite ou remova links de forma simples e intuitiva, mantendo seu hub sempre atualizado.
+- 📱 **Totalmente Responsivo**: Garanta uma experiência de usuário impecável em qualquer dispositivo, seja desktop, tablet ou smartphone.
 - 🌙 **Tema Escuro/Claro**: Ofereça suporte às preferências de tema do usuário, com opções de modo escuro e claro.
 - 🌐 **Tradução**: Inclua suporte para múltiplas línguas, permitindo que seus visitantes acessem seu hub de links em seu idioma nativo.
 - 🎨 **Design Personalizável**: Tenha controle total sobre as cores, fontes e o layout, adaptando-o à sua marca pessoal ou profissional.
-
 
 
 
@@ -75,19 +77,17 @@ cd links
 Edite o arquivo `index.html` para adicionar, modificar ou remover seus links. Cada link é representado por uma estrutura similar a esta:
 
 ```html
-<div class="link-item">
-    <a href="https://seusite.com" target="_blank" rel="noopener noreferrer">
-        <span>🔗</span>
-        Meu Site
-    </a>
-</div>
+<a href="https://www.linkedin.com/in/felipe-machado-giusti/"
+    class="btn btn-outline-primary btn-linkedin btn-lg px-4 py-3 fw-semibold d-flex align-items-center justify-content-center">
+    <i class="bi bi-linkedin me-3"></i> LinkedIn
+</a>
 ```
 
 **Dica**: Adicione `rel="noopener noreferrer"` aos links externos para melhorar a segurança e o desempenho.
 
 ### 3. Customize o Estilo
 
-Modifique o arquivo `tema.css` para ajustar as cores, fontes e o layout do seu hub de links. As variáveis CSS facilitam a personalização:
+Modifique o arquivo `tema.css` e também o arquivo `index.html` para ajustar as cores, fontes e o layout do seu hub de links. As variáveis CSS facilitam a personalização:
 ```html
 <head>
     <!-- Fonte Google -->
@@ -134,8 +134,8 @@ Este projeto está licenciado sob a **Licença MIT**. Para mais detalhes, consul
 
 **Felipe Machado Giust**
 
-- GitHub: [@seusuario](https://github.com/seusuario)
-- LinkedIn: [Felipe Machado Giust](https://seusuario.github.io/links/) <!-- **Nota**: Este link parece estar incorreto. Recomenda-se usar o link direto do seu perfil do LinkedIn. -->
+- GitHub: [@felipegiust](https://github.com/felipegiust)
+- LinkedIn: [Felipe Machado Giust](https://www.linkedin.com/in/felipe-machado-giusti/)
 
 ## 🤝 Contribuições
 
@@ -153,4 +153,4 @@ Contribuições são muito bem-vindas! Se você deseja colaborar com este projet
 
 ---
 
-**Última atualização:** Outubro de 2025
+**Última atualização:** Novembro de 2025
